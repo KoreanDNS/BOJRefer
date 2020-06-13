@@ -14,6 +14,7 @@ namespace koreandns
 	// 그래서 한쪽만 검사를 해보면 되는데 a쪽이 b쪽보다 범위도 적고 빠르기 때문에 한쪽 a에서 구하는게 좋다.
 	// 한쪽에서 약수가 없어야 한다. 2부터 루트 N까지 나눠 떨어지는 수가 있다면 소수가 아니다.
 	// 루트N은 실수 범위이기 때문에 정수 범위 내에서 찾아주기 위해서 양변을 제곱 해주었다. 그래서 i * i <= n 라는 식이 도출이 되었다.
+	// 시간 복잡도 루트n
 	
 	bool prime(int n)
 	{
@@ -31,5 +32,30 @@ namespace koreandns
 		}
 
 		return true;
+	}
+	
+	// 에라토스테네스의 체
+	// n까지 소수가 몇개인지 확인용
+	// loglogn 이라서 위에 소수 구하는 방법 보다 더 빠름 (이 방법을 사용하는 것을 추천)
+	int prim_range(const int n)
+	{
+		int ans = 0;
+
+		int prime[100]{};
+		bool check[101]{};
+		int n = 100;
+		for (int i = 2; i <= n; ++i)
+		{
+			if (false == check[i])
+			{
+				prime[ans++] = i;
+				for (int j = i * i; j <= n; j += i)
+				{
+					check[j] = true;
+				}
+			}
+		}
+
+		return ans;
 	}
 }
